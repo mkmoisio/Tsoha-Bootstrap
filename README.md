@@ -3,7 +3,7 @@
 Yleisiä linkkejä:
 
 * [Linkki sovellukseeni](http://momikko.users.cs.helsinki.fi/tsoha/)
-* [Linkki dokumentaatiooni](https://www.github.com)
+* [Linkki dokumentaatiooni](https://github.com/mkmoisio/Tsoha-Muistilista/blob/master/doc/dokumentaatio.pdf)
 
 ## Työn aihe
 
