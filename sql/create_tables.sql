@@ -6,6 +6,7 @@ CREATE TABLE Account (
 
 CREATE TABLE Task (
     id SERIAL PRIMARY KEY,
+    account_id INTEGER REFERENCES Account(id),
     title varchar(40) NOT NULL,
     text varchar(200),
     due DATE  
@@ -14,17 +15,18 @@ CREATE TABLE Task (
 CREATE TABLE Classification (
     id SERIAL PRIMARY KEY,
     title varchar(20) NOT NULL,
-    definition varchar(300) NOT NULL
+    text varchar(300) NOT NULL
 );
 
-CREATE TABLE AccountTask (
-    id SERIAL PRIMARY KEY,
-    task_id INTEGER REFERENCES Task(id),
-    account_id INTEGER REFERENCES Account(id)
-);
 
 CREATE TABLE TaskClassification (
     id SERIAL PRIMARY KEY,
-     task_id INTEGER REFERENCES Task(id),
-     classification_id INTEGER REFERENCES Classification(id)
+    task_id INTEGER REFERENCES Task(id),
+    classification_id INTEGER REFERENCES Classification(id)
+);
+
+CREATE TABLE AccountClassification(
+    id SERIAL PRIMARY KEY, 
+    account_id INTEGER REFERENCES Account(id),
+    classification_id INTEGER REFERENCES Classification(id)
 );
