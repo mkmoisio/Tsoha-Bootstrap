@@ -1,0 +1,4 @@
+{
+  "cmd": ["bash", "/Users/mikkomo/Documents/Tsoha/Tsoha-Muistilista/deploy.sh"],
+  "selector" : "source.shell"
+}
