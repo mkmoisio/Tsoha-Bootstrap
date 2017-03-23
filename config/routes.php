@@ -23,3 +23,4 @@ $routes->get('/task', function() {
 $routes->get('/login', function() {
     Controller::login();
 });
+
