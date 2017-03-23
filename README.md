@@ -11,5 +11,6 @@ Yleisiä linkkejä:
 
 ## Staattiset sivut
 [Etusivu/listaussivu](http://momikko.users.cs.helsinki.fi/tsoha/)
+
 [Esittelysivu](http://momikko.users.cs.helsinki.fi/tsoha/task)
 [Muokkaussivu](http://momikko.users.cs.helsinki.fi/tsoha/edit)
