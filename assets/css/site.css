@@ -9,9 +9,15 @@
     margin: 0px auto;
 }
 
+div.whitelem{
+    background-color:white;
+    padding:30px;
+    border-radius: 10px;
+    display: inline-block;
+}
 div.grayelem{
     background-color:lightgrey;
     padding:30px;
     border-radius: 10px;
-   display: inline-block;
+    display: inline-block;
 }

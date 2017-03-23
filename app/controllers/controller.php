@@ -15,6 +15,8 @@ class Controller extends BaseController {
         View::make('task.html');
     }
 
- 
+    public static function edit() {
+        View::make('edit.html');
+    }
 
 }

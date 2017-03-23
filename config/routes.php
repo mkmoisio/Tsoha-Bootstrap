@@ -24,3 +24,6 @@ $routes->get('/login', function() {
     Controller::login();
 });
 
+$routes->get('/edit', function() {
+    Controller::edit();
+});
