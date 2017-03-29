@@ -8,7 +8,7 @@ class Task extends BaseModel {
         parent::__construct($attributes);
     }
     /**
-     *  All task entities
+     *  Returns all entities
      * @return \Task
      */
     public static function all() {
@@ -29,7 +29,7 @@ class Task extends BaseModel {
     }
 
     /**
-     * One single task by task primary key
+     * One single task by primary key
      * 
      * @param type $id
      * @return \Task
@@ -52,9 +52,9 @@ class Task extends BaseModel {
         return null;
     }
     
-    public static function findByAccount($account_id) {
-        
-        
-    }
+//    public static function findByAccount($account_id) {
+//        
+//        
+//    }
 
 }
