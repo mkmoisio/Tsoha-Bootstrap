@@ -130,4 +130,9 @@ class Task extends BaseModel {
         $query->execute(array('title' => $this->title, 'text' => $this->text, 'id' => $this->id));
     }
 
+    public static function delete($id) {
+        $query = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id');
+        $query->execute(array('id' => $id));
+    }
+
 }
