@@ -24,7 +24,7 @@ $routes->post('/task/:id/edit', function($id) {
     TaskController::update($id);
 });
 
-$routes->get('/task/:id/delete', function($id) {
+$routes->post('/task/:id/delete', function($id) {
     TaskController::delete($id);
 });
 

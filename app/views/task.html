@@ -8,8 +8,11 @@
         <p>{{task.text}}</p>
         <div>
             <br>
+            <form method="post" action="{{base_path}}/task/{{task.id}}/delete" >
+                <button type="submit" class="btn btn-default">Poista</button>
+            </form>
             <a href="{{base_path}}/task/{{task.id}}/edit" class="btn btn-default">Muokkaa</a>
-            <a href="{{base_path}}/task/{{task.id}}/delete" class="btn btn-default">Poista</a>
+            
             <br>
         </div>
     </div>
