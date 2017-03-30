@@ -17,7 +17,7 @@ class Account extends BaseModel {
      * @param type $id
      * @return \Account
      */
-    public static function find($id) {
+    public static function findOne($id) {
         $query = DB::connection()->prepare('SELECT * FROM Account WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();

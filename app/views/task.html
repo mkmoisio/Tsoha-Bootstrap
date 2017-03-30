@@ -10,11 +10,13 @@
 
                 <div class="grayelem" style="width:65%;display: inline-block">
 
-                    <h3>Bar Xplosive</h3>
+                    <h3>{{task.title}}</h3>
 
                     <p>          
-                        Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Sed posuere interdum sem. Quisque ligula eros ullamcorper quis, lacinia quis facilisis sed sapien. Mauris varius diam vitae arcu. Sed arcu lectus auctor vitae, consectetuer et venenatis eget velit. Sed augue orci, lacinia eu tincidunt et eleifend nec lacus. Donec ultricies nisl ut felis, suspendisse potenti. Lorem ipsum ligula ut hendrerit mollis, ipsum erat vehicula risus, eu suscipit sem libero nec erat. Aliquam erat volutpat. Sed congue augue vitae neque. Nulla consectetuer porttitor pede. Fusce purus morbi tortor magna condimentum vel, placerat id blandit sit amet tortor.  
+                        {{task.text}}
                     </p>
+
+
                 </div>
 
 
@@ -26,8 +28,8 @@
 
     <div>
         <br>
-         <a href="/tsoha/edit" class="btn btn-default">Muokkaa</a>
-     
+        <a href="{{base_path}}/task/{{task.id}}/edit" class="btn btn-default">Muokkaa</a>
+
         <button class="btn btn-default" type="button">Poista</button>
         <br>
         <br>

@@ -1,5 +1,10 @@
 <?php
 
+/**
+ * Description of Classification
+ *
+ * @author mikkomo
+ */
 class Classification extends BaseModel {
 
     public $id, $title, $text;
@@ -7,11 +12,12 @@ class Classification extends BaseModel {
     public function __construct($attributes) {
         parent::__construct($attributes);
     }
+
     /**
      * Returns all entities
      * @return \Classification
      */
-    public static function all() {
+    public static function findAll() {
         $query = DB::connection()->prepare('SELECT * FROM Classification');
         $query->execute();
 
@@ -27,12 +33,13 @@ class Classification extends BaseModel {
         }
         return $classifications;
     }
+
     /**
      * One single classification by primary key
      * @param type $id
      * @return \Classification
      */
-    public static function find($id) {
+    public static function findOne($id) {
         $query = DB::connection()->prepare('SELECT * FROM Classification WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
         $row = $query->fetch();

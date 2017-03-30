@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<p>Lisää</p>
+<div class="grayelem" style="width:65%;display: inline-block">
+    <form method="post" action="{{base_path}}/new">
+        <div class="form-group">
+
+            <label>Title</label>
+            <input type="text" name="title" class="form-control">
+
+        </div>
+        <div class="form-group">
+            <label>Textfield</label>
+
+            <textarea class="form-control" rows="3" name="text"> </textarea>
+
+
+        </div>
+
+        <div class="form-group">
+            <button type="submit">Go</button>
+        </div>
+    </form>
+</div>
+
+
+
+{% endblock %}

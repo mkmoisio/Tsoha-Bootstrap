@@ -9,7 +9,7 @@ CREATE TABLE Task (
     account_id INTEGER REFERENCES Account(id),
     title varchar(40) NOT NULL,
     text varchar(200),
-    due DATE  
+    date DATE  
 );
 
 CREATE TABLE Classification (

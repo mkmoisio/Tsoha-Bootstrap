@@ -1,29 +1,32 @@
 <?php
 
-
-/*
- * HelloWorld
- */
-$routes->get('/hiekkalaatikko', function() {
-    HelloWorldController::sandbox();
-});
-
 /*
  * !
  */
 
 $routes->get('/', function() {
-    Controller::index();
+    TaskController::index();
 });
 
-$routes->get('/task', function() {
-    Controller::task();
+$routes->get('/new', function() {
+    TaskController::create();
 });
+
+$routes->post('/new', function() {
+    TaskController::store();
+});
+
+$routes->get('/task/:id/edit', function($id) {
+    TaskController::edit($id);
+});
+
+$routes->get('/task/:id', function($id) {
+    TaskController::task($id);
+});
+
 
 $routes->get('/login', function() {
     Controller::login();
 });
 
-$routes->get('/edit', function() {
-    Controller::edit();
-});
+
