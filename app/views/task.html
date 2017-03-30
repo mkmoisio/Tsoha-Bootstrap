@@ -4,36 +4,34 @@
 
 <div>
 
-    <div>
+
+
+
+    <div class="grayelem" style="width:65%;display: inline-block">
+
+        <h3>{{task.title}}</h3>
+
+        <p>          
+            {{task.text}}
+        </p>
+
+
+
         <div>
-            <div>
+            <br>
+            <a href="{{base_path}}/task/{{task.id}}/edit" class="btn btn-default">Muokkaa</a>
 
-                <div class="grayelem" style="width:65%;display: inline-block">
-
-                    <h3>{{task.title}}</h3>
-
-                    <p>          
-                        {{task.text}}
-                    </p>
-
-
-                </div>
-
-
-            </div>
+            <button class="btn btn-default" type="button">Poista</button>
+            <br>
+            <br>
         </div>
-
     </div>
-    <br>
 
-    <div>
-        <br>
-        <a href="{{base_path}}/task/{{task.id}}/edit" class="btn btn-default">Muokkaa</a>
 
-        <button class="btn btn-default" type="button">Poista</button>
-        <br>
-        <br>
-    </div>
+
+
+
+
 </div>
 
 

@@ -55,7 +55,7 @@ class Task extends BaseModel {
                 'text' => $row['text'],
                 'date' => $row['date']
             ));
-           
+
             return $task;
         }
 
@@ -116,12 +116,18 @@ class Task extends BaseModel {
      * @return type
      */
     public function save() {
+        /// !!!!!!!!!! HUOM ACCOUNT IDKSI TULEE AINA 1 !!!!!!!!!!
         $query = DB::connection()->prepare('INSERT INTO Task(account_id, title, text, date) VALUES (1, :title, :text, NOW())');
         $query->execute(array('title' => $this->title, 'text' => $this->text));
 
 //        $row = $query->fetch();
 //        $this->id = $row['id'];
 //        return $this->id;
+    }
+
+    public function update() {
+        $query = DB::connection()->prepare('UPDATE Task SET title = :title, text = :text WHERE Task.id = :id');
+        $query->execute(array('title' => $this->title, 'text' => $this->text, 'id' => $this->id));
     }
 
 }

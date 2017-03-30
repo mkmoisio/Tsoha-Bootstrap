@@ -20,6 +20,10 @@ $routes->get('/task/:id/edit', function($id) {
     TaskController::edit($id);
 });
 
+$routes->post('/task/:id/edit', function($id) {
+    TaskController::update($id);
+});
+
 $routes->get('/task/:id', function($id) {
     TaskController::task($id);
 });

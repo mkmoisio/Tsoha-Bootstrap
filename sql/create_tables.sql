@@ -8,7 +8,7 @@ CREATE TABLE Task (
     id SERIAL PRIMARY KEY,
     account_id INTEGER REFERENCES Account(id),
     title varchar(40) NOT NULL,
-    text varchar(200),
+    text varchar(500),
     date DATE  
 );
 

@@ -26,9 +26,15 @@ class TaskController extends BaseController {
 
     public static function store() {
         $params = $_POST;
-
+        
+        $title = trim($params['title']);
+        
+        if (!$title) {
+            $title = "Title";
+        }
+        
         $task = new Task(array(
-            'title' => $params['title'],
+            'title' => $title,
             'text' => $params['text']
         ));
 
@@ -41,6 +47,24 @@ class TaskController extends BaseController {
         Kint::dump($task);
 
         View::make('edit.html', array('task' => $task));
+    }
+
+    public static function update($id) {
+        $params = $_POST;
+        $task = Task::findOne($id);
+        
+        $title = trim($params['title']);
+           
+        if ($title) {
+            
+            $task->title = $title;
+        }
+
+        $task->text = $params['text'];
+
+        Kint::dump($task);
+        $task->update();
+        Redirect::to('/task/' . $task->id);
     }
 
 }
