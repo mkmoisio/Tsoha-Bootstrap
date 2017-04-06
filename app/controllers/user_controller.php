@@ -35,7 +35,8 @@ class UserController extends BaseController {
         $params = $_POST;
 
         $user = Account::register($params['username'], crypt($params['password']));
-
+        
+        Kint::dump($user);
         if (!$user) {
             View::make('register.html', array('errors' => array('Username already taken')));
         } else {
