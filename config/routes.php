@@ -29,6 +29,10 @@ $routes->get('/task/:id', function($id) {
     TaskController::task($id);
 });
 
+$routes->get('/personal', function() {
+    Controller::personal();
+});
+
 
 /**
  * ClassificationController
@@ -56,6 +60,8 @@ $routes->post('/classification/:id/edit', function($id) {
 $routes->post('/classification/:id/delete', function($id) {
     ClassificationController::delete($id);
 });
+
+
 
 /**
  * UserController

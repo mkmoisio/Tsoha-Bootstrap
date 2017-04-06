@@ -38,8 +38,10 @@ class ClassificationController extends BaseController {
 
     public static function classification($id) {
         $classification = Classification::findOne($id);
+        $tasks = Task::findAllByClassificationId($classification->id);
         Kint::dump($classification);
-        View::make('classification/classification.html', array('classification' => $classification));
+        Kint::dump($tasks);
+        View::make('classification/classification.html', array('classification' => $classification, 'tasks' => $tasks));
     }
 
     public static function delete($id) {

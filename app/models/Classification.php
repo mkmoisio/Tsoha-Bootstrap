@@ -57,22 +57,25 @@ class Classification extends BaseModel {
         return null;
     }
 
+//    public static function findAllByAccountId($account_id) {
+//        $query = DB::connection()->prepare('SELECT Classification.id, Classification.title FROM Classification );
+//    }
+
     public function save() {
         $query = DB::connection()->prepare('INSERT INTO Classification(title, text) VALUES (:title, :text)');
         $query->execute(array('title' => $this->title, 'text' => $this->text));
     }
-    
-   public static function delete($id) {
+
+    public static function delete($id) {
         $query = DB::connection()->prepare('DELETE FROM Classification WHERE Classification.id = :id');
         // Huom delete ei toimi jos poistettava entiteetti on viimeinen, johon viitataan TaskClassificationissa
         $query->execute(array('id' => $id));
     }
-    
-     public function update() {
+
+    public function update() {
         $query = DB::connection()->prepare('UPDATE Classification SET title = :title, text = :text WHERE Classification.id = :id');
         $query->execute(array('title' => $this->title, 'text' => $this->text, 'id' => $this->id));
     }
-    
 
     public function validate_title() {
         $errors = array();

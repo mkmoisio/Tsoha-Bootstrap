@@ -12,11 +12,18 @@ class Controller extends BaseController {
         View::make('index.html', array('tasks' => $tasks, 'classifications' => $classifications));
     }
 
+    public static function personal() {
+        $tasks = Task::findAllByAccountId(self::get_user_logged_in()->id);
+        $classifications;
+//        $classifications = Classification::findAllByAccountId(self::get_user_logged_in()->id);
+        View::make('index.html', array('tasks' => $tasks));
+    }
+
     public static function db() {
         $tasks = Task::findAll();
         $classifications = Classification::findAll();
         $accounts = Account::findAll();
-        
+
         View::make('db.html', array('tasks' => $tasks, 'classifications' => $classifications, 'accounts' => $accounts));
     }
 

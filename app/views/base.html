@@ -36,11 +36,10 @@
                     <ul class="nav navbar-nav">
                         <!-- Navigaation linkit -->
                         <li><a href="{{base_path}}">Home</a></li>
+                        {% if user_logged_in %}
                         <li><a href="{{base_path}}/new_task">New task</a></li>
                         <li><a href="{{base_path}}/new_classification">New classification</a></li>
-
-                        {% if user_logged_in %}
-                        <li><a>User: {{user_logged_in.username}}</a></li>
+                        <li><a href="{{base_path}}/personal">User: {{user_logged_in.username}}</a></li>
                         <li><a href="{{base_path}}/logout">Logout</a>
                         {% else %}
                         <li><a href="{{base_path}}/login">Login</a></li>
