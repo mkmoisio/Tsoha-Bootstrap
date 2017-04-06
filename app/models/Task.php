@@ -7,7 +7,7 @@
  */
 class Task extends BaseModel {
 
-    public $id, $title, $text, $date;
+    public $id, $account_id, $title, $text, $date;
 
     public function __construct($attributes) {
         parent::__construct($attributes);
@@ -20,6 +20,7 @@ class Task extends BaseModel {
         foreach ($query->fetchAll() as $row) {
             $tasks[] = new Task(array(
                 'id' => $row['id'],
+                'account_id' => $row['account_id'],
                 'title' => $row['title'],
                 'text' => $row['text'],
                 'date' => $row['date']

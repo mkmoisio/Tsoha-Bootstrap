@@ -18,6 +18,23 @@ class Account extends BaseModel {
      * @param type $id
      * @return \Account
      */
+    public static function findAll() {
+
+        $query = DB::connection()->prepare('SELECT * FROM Account');
+        $query->execute();
+        $accounts = array();
+
+        foreach ($query->fetchAll() as $row) {
+            $accounts[] = new Account(array(
+                'id' => $row['id'],
+                'username' => $row['username'],
+                'password' => $row['password'],
+              
+            ));
+        }
+        return $accounts;
+    }
+
     public static function findOne($id) {
         $query = DB::connection()->prepare('SELECT * FROM Account WHERE id = :id LIMIT 1');
         $query->execute(array('id' => $id));
@@ -59,7 +76,7 @@ class Account extends BaseModel {
         } else {
             $query = DB::connection()->prepare('INSERT INTO Account(username, password) VALUES (:username, :password)');
             $query->execute(array('username' => $username, 'password' => $password));
-        
+
 
             $query = DB::connection()->prepare('SELECT id, username FROM Account WHERE username = :username');
             $query->execute(array('username' => $username));

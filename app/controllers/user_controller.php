@@ -23,7 +23,7 @@ class UserController extends BaseController {
         } else {
             $_SESSION['user'] = $user->id;
 
-            Redirect::to('/', array('message' => 'Kirjautuminen ok - ' . $user->username));
+            Redirect::to('/', array('message' => 'Kirjautuminen ok - ' . $user->username . '.'));
         }
     }
 
@@ -31,13 +31,13 @@ class UserController extends BaseController {
         View::make('register.html');
     }
 
-    public static function handle_register() {
+    public static function handle_registration() {
         $params = $_POST;
 
         Kint::dump($params);
-        
+
         $user = Account::register($params['username'], $params['password']);
-        
+
         Kint::dump($user);
         if (!$user) {
             View::make('register.html', array('errors' => array('Username already taken')));
@@ -45,6 +45,11 @@ class UserController extends BaseController {
             $_SESSION['user'] = $user->id;
             Redirect::to('/', array('message' => 'Registered user ' . $user->username . '.'));
         }
+    }
+
+    public static function logout() {
+        $_SESSION['user'] = null;
+        Redirect::to('/', array('message' => 'Uloskirjautuminen ok.'));
     }
 
 }

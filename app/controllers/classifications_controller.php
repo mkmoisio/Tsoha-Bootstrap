@@ -3,10 +3,12 @@
 class ClassificationController extends BaseController {
 
     public static function create() {
+        self::check_logged_in();
         View::make('classification/create_classification.html');
     }
 
     public static function store() {
+        self::check_logged_in();
         $params = $_POST;
 
         $attributes = array(
@@ -27,6 +29,7 @@ class ClassificationController extends BaseController {
     }
 
     public static function edit($id) {
+        self::check_logged_in();
         $classification = Classification::findOne($id);
         Kint::dump($classification);
 
@@ -40,11 +43,13 @@ class ClassificationController extends BaseController {
     }
 
     public static function delete($id) {
+        self::check_logged_in();
         Classification::delete($id);
         Redirect::to('/');
     }
 
     public static function update($id) {
+        self::check_logged_in();
         $params = $_POST;
         $classification = Classification::findOne($id);
 

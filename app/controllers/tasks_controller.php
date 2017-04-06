@@ -14,10 +14,12 @@ class TaskController extends BaseController {
     }
 
     public static function create() {
+        self::check_logged_in();
         View::make('task/create_task.html');
     }
 
     public static function store() {
+        self::check_logged_in();
         $params = $_POST;
 
         $attributes = array(
@@ -38,6 +40,7 @@ class TaskController extends BaseController {
     }
 
     public static function edit($id) {
+        self::check_logged_in();
         $task = Task::findOne($id);
         Kint::dump($task);
 
@@ -45,6 +48,7 @@ class TaskController extends BaseController {
     }
 
     public static function update($id) {
+        self::check_logged_in();
         $params = $_POST;
         $task = Task::findOne($id);
 
@@ -68,6 +72,7 @@ class TaskController extends BaseController {
     }
 
     public static function delete($id) {
+        self::check_logged_in();
         Task::delete($id);
         Redirect::to('/');
     }

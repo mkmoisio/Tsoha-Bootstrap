@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+
+<p>tasks</p>
+<table class="table table-bordered">
+    {% for task in tasks %}
+    <tr>
+        <td>{{task.id}}</td>
+        <td>{{task.account_id}}</td>
+        <td>{{task.title}}</td>
+        <td>{{task.date}}</td>      
+        <td>{{task.text}}</td>
+           
+    </tr>
+    {% endfor %}
+
+</table>
+<p>accounts</p>
+<table class="table table-bordered">
+    {% for account in accounts %}
+    <tr>
+        <td>{{account.id}}</td>
+        <td>{{account.username}}</td>
+        <td>{{account.password}}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+<p>classifications</p>
+<table class="table table-bordered">
+    {% for classification in classifications %}
+    <tr>
+        <td>{{classification.id}}</td>
+        <td>{{classification.title}}</td>
+        <td>
+            {{classification.text}}
+        </td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+{% endblock %}

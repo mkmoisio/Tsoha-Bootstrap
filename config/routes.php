@@ -74,9 +74,13 @@ $routes->get('/register', function() {
 });
 
 $routes->post('/register', function() {
-    UserController::handle_register();
+    UserController::handle_registration();
 });
 
+$routes->get('/logout', function() {
+
+    UserController::logout();
+});
 
 /**
  * Other
@@ -85,7 +89,9 @@ $routes->get('/', function() {
     Controller::index();
 });
 
-
+$routes->get('/db', function() {
+    Controller::db();
+});
 
 
 
