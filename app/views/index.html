@@ -9,7 +9,7 @@
 
     <div class="grayelem">
         <div class="whitelem">
-            <h2>Tasks</h2>
+            <h3>Tasks</h3>
             <table style="width: 70%; display: inline-block" class="table table-condensed">
                 <thead>
                     <tr>
@@ -34,48 +34,22 @@
             </table>
 
             <div style="width: 25%; display: inline-block;vertical-align: top; float:right">
+
                 <p>Luokittelut</p>
+
                 <ul class="list-group">
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Pitkäniminen luokittelu täs</a></li>
-                    <li class="list-group-item"><a>Lyhyt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
-                    <li class="list-group-item"><a>Eksponenttijakauma</a></li>
-                    <li class="list-group-item"><a>Metsätyöt</a></li>
+
+
+
+                    {% for c in classifications %}
+                    <li class="list-group-item"><a href = "/tsoha/classification/{{c.id}}" >{{c.title}}</a></li>
+                    {% endfor %}
+
                 </ul>
             </div>
         </div>
 
     </div>
 </div>
-<!--
-    <div class="grayelem">
-        <div >
-            <ul class="list-group">
-                <li class="list-group-item"><a>List item 1</a></li>
-                <li class="list-group-item"><a>List item 2</a></li>
-                <li class="list-group-item"><a>List item 3</a></li>
-                <li class="list-group-item"><a>List item 4</a></li>
-                <li class="list-group-item"><a>List item 5</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-                <li class="list-group-item"><a>List item aa</a></li>
-            </ul>
-        </div>
-    </div>
 
-</div>
--->
 {% endblock %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block content %} 
+
+<p>New task</p>
+<div class="grayelem" style="width:65%;display: inline-block">
+    <form method="post" action="{{base_path}}/new_task">
+
+        <div class="form-group">
+
+            <label>Title</label>
+            <input type="text" name="title" class="form-control" value="{{attributes.title}}">
+
+        </div>
+        <div class="form-group">
+            <label>Text field</label>
+
+            <textarea class="form-control" rows="3" name="text">{{attributes.text}}</textarea>
+
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-default">Go</button>
+        </div>
+
+
+    </form>
+
+</div>
+<div>
+    {% if errors %}
+    <div class="alert alert-danger">
+        <ul>
+            {% for error in errors %}
+            <li>{{error}}</li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}     
+</div>
+
+<br>
+<footer>
+    <div align="bottom"> 
+        <a href="/tsoha">Takaisin</a>
+    </div>
+</footer>
+
+{% endblock %}

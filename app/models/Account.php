@@ -12,6 +12,7 @@ class Account extends BaseModel {
     public function __construct($attributes) {
         parent::__construct($attributes);
     }
+
     /**
      * Returns all entities
      * @param type $id
@@ -31,6 +32,47 @@ class Account extends BaseModel {
         }
 
         return null;
+    }
+
+    public static function authenticate($username, $password) {
+        $query = DB::connection()->prepare('SELECT * FROM Account WHERE username = :username AND password = :password');
+        $query->execute(array('username' => $username, 'password' => $password));
+
+        $row = $query->fetch();
+
+        if ($row) {
+            return new Account(array(
+                'id' => $row['id'],
+                'username' => $row['username']
+            ));
+        } else {
+            return null;
+        }
+    }
+
+    public static function register($username, $password) {
+        $query = DB::connection()->prepare('SELECT Username FROM Account WHERE username = :username ');
+        $query->execute(array('username' => $username));
+        $row = $query->fetch();
+        if ($row) {
+            return null;
+        } else {
+            $query = DB::connection()->prepare('INSERT INTO Account(username, password) VALUES (:username, :password)');
+            $query->execute(array('username' => $username, 'password' => $password));
+
+            if ($query->fetch()) {
+                $query = DB::connection()->prepare('SELECT * FROM Account WHERE username = :username');
+                $query->execute(array('username' => $username));
+                $row = $query->fetch();
+
+                return new Account(array(
+                    'id' => $row['id'],
+                    'username' => $row['username']
+                ));
+            } else {
+                return null;
+            }
+        }
     }
 
     //put your code here

@@ -3,20 +3,16 @@
 class Controller extends BaseController {
 
     public static function index() {
+        $tasks = Task::findAll();
+        $classifications = Classification::findAll();
+        Kint::dump($tasks);
+        Kint::dump($classifications);
         // make-metodi renderöi app/views-kansiossa sijaitsevia tiedostoja
-        View::make('home.html');
+        
+        View::make('index.html', array('tasks' => $tasks, 'classifications' => $classifications));
     }
-
-    public static function login() {
-        View::make('login.html');
-    }
-
-    public static function task() {
-        View::make('task.html');
-    }
-
-    public static function edit() {
-        View::make('edit.html');
-    }
+    
+    
+   
 
 }

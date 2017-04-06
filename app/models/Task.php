@@ -11,6 +11,7 @@ class Task extends BaseModel {
 
     public function __construct($attributes) {
         parent::__construct($attributes);
+        $this->validators = array('validate_title', 'validate_text');
     }
 
     /**
@@ -132,7 +133,26 @@ class Task extends BaseModel {
 
     public static function delete($id) {
         $query = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id');
+        // Huom delete ei toimi jos poistettava entiteetti on viimeinen, johon viitataan TaskClassificationissa
         $query->execute(array('id' => $id));
+    }
+    
+    public function validate_title() {
+        $errors = array();
+        
+        if (!parent::validate_string_length($this->title, 1)) {
+            $errors[] = 'Title is empty!';            
+        }
+        return $errors;
+    }
+    
+    public function validate_text() {
+        $errors = array();
+        
+        if (!parent::validate_string_length($this->text, 1)) {
+            $errors[] = 'Text field is empty!';            
+        }
+        return $errors;
     }
 
 }

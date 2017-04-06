@@ -4,20 +4,21 @@
 
 <div>
     <div class="grayelem" style="width:65%;display: inline-block">
-        <h3>{{task.title}}</h3>
-        <p>{{task.text}}</p>
+        <h3>{{classification.title}}</h3>
+        <p>{{classification.text}}</p>
         <div>
             <br>
-            <form method="post" action="{{base_path}}/task/{{task.id}}/delete" >
+            <a href="{{base_path}}/classification/{{classification.id}}/edit" class="btn btn-default">Muokkaa</a>
+            <form method="post" action="{{base_path}}/classification/{{classification.id}}/delete" >
                 <button type="submit" class="btn btn-default">Poista</button>
             </form>
-            <a href="{{base_path}}/task/{{task.id}}/edit" class="btn btn-default">Muokkaa</a>
-            
-            <br>
+
+
+
         </div>
     </div>
 </div>
-
+<br>
 <footer>
     <div align="bottom"> 
         <a href="/tsoha">Takaisin</a>

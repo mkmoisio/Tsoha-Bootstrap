@@ -1,7 +1,7 @@
 CREATE TABLE Account (
     id SERIAL PRIMARY KEY,
     username varchar(20) NOT NULL UNIQUE,
-    password varchar(20) NOT NULL  
+    password varchar(50) NOT NULL  
 );
 
 CREATE TABLE Task (

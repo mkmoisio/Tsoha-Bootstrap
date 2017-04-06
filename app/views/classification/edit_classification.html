@@ -10,37 +10,31 @@
 
                 <div class="grayelem" style="width:65%;display: inline-block">
 
-                    <form method="post" action="{{base_path}}/task/{{task.id}}/edit">
+                    <form method="post" action="{{base_path}}/classification/{{classification.id}}/edit">
                         <div class="form-group">
-                            <input type="text" class="form-control" name="title" placeholder="{{task.title}}" >
+                            <input type="text" class="form-control" name="title" placeholder="{{classification.title}}" >
                         </div>
 
                         <div class="form-group">
-                            <textarea class="form-control" rows="3" name="text">{{task.text}}</textarea>
+                            <textarea class="form-control" rows="3" name="text">{{classification.text}}</textarea>
                         </div>
-
-                        <button type="submit" class="btn btn-default">Submit</button> <a href="{{base_path}}/task/{{task.id}}" class="btn btn-default">Kumoa</a>
+                        <button type="submit" class="btn btn-default">Submit</button> <a href="{{base_path}}/classification/{{classification.id}}" class="btn btn-default">Kumoa</a>
 
                     </form>
 
                 </div>
-
-
             </div>
         </div>
 
     </div>
-    <br>
 
 
 </div>
-
-
+<br>
 <footer>
     <div align="bottom"> 
         <a href="{{base_path}}/task/{{task.id}}">Takaisin</a>
     </div>
 </footer>
 {% endblock %}
-
 
