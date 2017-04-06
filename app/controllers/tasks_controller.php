@@ -23,6 +23,7 @@ class TaskController extends BaseController {
         $params = $_POST;
 
         $attributes = array(
+            'account_id' => self::get_user_logged_in()->id,
             'title' => $params['title'],
             'text' => $params['text']
         );

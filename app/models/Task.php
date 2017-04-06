@@ -119,8 +119,8 @@ class Task extends BaseModel {
      */
     public function save() {
         /// !!!!!!!!!! HUOM ACCOUNT IDKSI TULEE AINA 1 !!!!!!!!!!
-        $query = DB::connection()->prepare('INSERT INTO Task(account_id, title, text, date) VALUES (1, :title, :text, NOW())');
-        $query->execute(array('title' => $this->title, 'text' => $this->text));
+        $query = DB::connection()->prepare('INSERT INTO Task(account_id, title, text, date) VALUES (:account_id, :title, :text, NOW())');
+        $query->execute(array('account_id' => $this->account_id, 'title' => $this->title, 'text' => $this->text));
 
 //        $row = $query->fetch();
 //        $this->id = $row['id'];
