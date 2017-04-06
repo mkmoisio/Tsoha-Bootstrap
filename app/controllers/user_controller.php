@@ -15,9 +15,9 @@ class UserController extends BaseController {
     public static function handle_login() {
 
         $params = $_POST;
-
-        $user = Account::authenticate($params['username'], crypt($params['password']));
-
+        Kint::dump($params);
+        $user = Account::authenticate($params['username'], $params['password']);
+        Kint::dump($user);
         if (!$user) {
             View::make('login.html', array('errors' => array('Väärä käyttäjätunnus tai salasana!')));
         } else {
@@ -34,14 +34,16 @@ class UserController extends BaseController {
     public static function handle_register() {
         $params = $_POST;
 
-        $user = Account::register($params['username'], crypt($params['password']));
+        Kint::dump($params);
+        
+        $user = Account::register($params['username'], $params['password']);
         
         Kint::dump($user);
         if (!$user) {
             View::make('register.html', array('errors' => array('Username already taken')));
         } else {
             $_SESSION['user'] = $user->id;
-            Redirect::to('/', array('message' => 'Registered user ' . $user->username));
+            Redirect::to('/', array('message' => 'Registered user ' . $user->username . '.'));
         }
     }
 

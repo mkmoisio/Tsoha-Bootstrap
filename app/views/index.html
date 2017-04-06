@@ -15,7 +15,7 @@
                     <tr>
                         <th style="width: 100px">Title</th>
                         <th style="width: 70px">Date</th>
-                        <th style="width: 300px">Textfield</th>
+                        <th style="width: 300px">Text field</th>
                     </tr>
                 </thead>
 
@@ -48,7 +48,13 @@
                 </ul>
             </div>
         </div>
-
+        {% if message %}
+        <div class="alert alert-success" role="alert">
+            <ul>
+                <li>{{message}}</li>
+            </ul>
+        </div>
+        {% endif %} 
     </div>
 </div>
 

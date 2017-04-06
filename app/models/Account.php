@@ -35,7 +35,7 @@ class Account extends BaseModel {
     }
 
     public static function authenticate($username, $password) {
-        $query = DB::connection()->prepare('SELECT * FROM Account WHERE username = :username AND password = :password');
+        $query = DB::connection()->prepare('SELECT id, username FROM Account WHERE username = :username AND password = :password');
         $query->execute(array('username' => $username, 'password' => $password));
 
         $row = $query->fetch();
@@ -51,7 +51,7 @@ class Account extends BaseModel {
     }
 
     public static function register($username, $password) {
-        $query = DB::connection()->prepare('SELECT Username FROM Account WHERE username = :username ');
+        $query = DB::connection()->prepare('SELECT username FROM Account WHERE username = :username');
         $query->execute(array('username' => $username));
         $row = $query->fetch();
         if ($row) {
@@ -59,19 +59,16 @@ class Account extends BaseModel {
         } else {
             $query = DB::connection()->prepare('INSERT INTO Account(username, password) VALUES (:username, :password)');
             $query->execute(array('username' => $username, 'password' => $password));
+        
 
-            if ($query->fetch()) {
-                $query = DB::connection()->prepare('SELECT * FROM Account WHERE username = :username');
-                $query->execute(array('username' => $username));
-                $row = $query->fetch();
+            $query = DB::connection()->prepare('SELECT id, username FROM Account WHERE username = :username');
+            $query->execute(array('username' => $username));
+            $row = $query->fetch();
 
-                return new Account(array(
-                    'id' => $row['id'],
-                    'username' => $row['username']
-                ));
-            } else {
-                return null;
-            }
+            return new Account(array(
+                'id' => $row['id'],
+                'username' => $row['username']
+            ));
         }
     }
 
