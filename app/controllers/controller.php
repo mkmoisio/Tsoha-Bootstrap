@@ -23,8 +23,9 @@ class Controller extends BaseController {
         $tasks = Task::findAll();
         $classifications = Classification::findAll();
         $accounts = Account::findAll();
-
-        View::make('db.html', array('tasks' => $tasks, 'classifications' => $classifications, 'accounts' => $accounts));
+        $taskclassifications = TaskClassification::findAll(); 
+        Kint::dump($taskclassifications);
+        View::make('db.html', array('tasks' => $tasks, 'classifications' => $classifications, 'accounts' => $accounts, 'taskclassifications' => $taskclassifications));
     }
 
 }

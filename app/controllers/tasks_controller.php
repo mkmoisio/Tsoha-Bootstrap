@@ -9,8 +9,14 @@ class TaskController extends BaseController {
 
     public static function task($id) {
         $task = Task::findOne($id);
+        if (self::get_user_logged_in() != null && $task->account_id == self::get_user_logged_in()->id) {
+            $boolean = true;
+        } else {
+            $boolean = null;
+        }
         Kint::dump($task);
-        View::make('task.html', array('task' => $task));
+        Kint::dump($boolean);
+        View::make('task.html', array('task' => $task, 'owner' => $boolean));
     }
 
     public static function create() {
@@ -24,27 +30,28 @@ class TaskController extends BaseController {
         self::check_logged_in();
         $params = $_POST;
         
-        
-        
-       // Kint::dump();
-        $classifications = $params['classifications'];
-        
-        
-       
-        
+        if (array_key_exists('classifications', $params)) {
+            $classifications = $params['classifications'];
+        } else {
+            $classifications = array();
+        }
+
         $attributes = array(
             'account_id' => self::get_user_logged_in()->id,
             'title' => $params['title'],
             'text' => $params['text']
         );
-       
+
+//        foreach ($classifications as $classification) {
+//            $attributes['classifications'][] = $classification;
+//        }
 
         $task = new Task($attributes);
 
         $errors = $task->errors();
 
         if (count($errors) == 0) {
-             
+
             $task->save($classifications);
 
             Redirect::to('/');
@@ -78,7 +85,7 @@ class TaskController extends BaseController {
         Kint::dump($task);
         Kint::dump($errors);
         if (count($errors) == 0) {
-            $task->update();
+            $task->update(self::get_user_logged_in()->id);
             Redirect::to('/task/' . $task->id);
         } else {
             View::make('task/edit_task.html', array('errors' => $errors, 'task' => $task));
@@ -87,7 +94,7 @@ class TaskController extends BaseController {
 
     public static function delete($id) {
         self::check_logged_in();
-        Task::delete($id);
+        Task::delete($id, self::get_user_logged_in()->id);
         Redirect::to('/');
     }
 

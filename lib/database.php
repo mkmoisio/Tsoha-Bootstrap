@@ -14,12 +14,10 @@
             }else{
               $connection = new PDO($config['resource']);
             }
-             // Asetetaan tietokannan kenttien koodaukseksi utf8
             $connection->exec('SET NAMES UTF8');
 
-            // Näytetään virheilmoitukset
             $connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+            $connection->setAttribute(PDO::ATTR_EMULATE_PREPARES, true);
           
         } catch (PDOException $e) {
             die('Virhe tietokantayhteydessä tai tietokantakyselyssä: ' . $e->getMessage());

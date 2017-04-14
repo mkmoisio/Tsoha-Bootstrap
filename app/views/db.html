@@ -6,6 +6,16 @@
 
 <p>tasks</p>
 <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 70px">id</th>
+            <th style="width: 70px">account_id</th>
+            <th style="width: 70px">title</th>
+            <th style="width: 70px">date</th>
+            <th style="width: 70px">text</th>
+        </tr>
+    </thead>
+
     {% for task in tasks %}
     <tr>
         <td>{{task.id}}</td>
@@ -13,13 +23,22 @@
         <td>{{task.title}}</td>
         <td>{{task.date}}</td>      
         <td>{{task.text}}</td>
-           
+
     </tr>
     {% endfor %}
 
 </table>
 <p>accounts</p>
 <table class="table table-bordered">
+
+    <thead>
+        <tr>
+            <th style="width: 70px">id</th>
+            <th style="width: 70px">username</th>
+            <th style="width: 70px">password</th>
+
+        </tr>
+    </thead>
     {% for account in accounts %}
     <tr>
         <td>{{account.id}}</td>
@@ -30,7 +49,20 @@
 
 </table>
 <p>classifications</p>
+
 <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th style="width: 70px">id</th>
+            <th style="width: 70px">title</th>
+            <th style="width: 70px">text</th>
+
+        </tr>
+    </thead>
+
+
+
+
     {% for classification in classifications %}
     <tr>
         <td>{{classification.id}}</td>
@@ -38,9 +70,37 @@
         <td>
             {{classification.text}}
         </td>
+        <
     </tr>
     {% endfor %}
 
-</table>
+    </table>
+
+<p>taskclassifications</p>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th style="width: 70px">id</th>
+                <th style="width: 70px">task_id</th>
+                <th style="width: 70px">classification_id</th>
+
+            </tr>
+        </thead>
+        {% for taskClassification in taskClassifications %}
+
+        <tr>
+            <td>{{classification.id}}</td>
+            <td>{{classification.title}}</td>
+            <td>
+                {{classification.text}}
+            </td>
+            
+        </tr>
+
+        {% endfor %}
+    </table>
+
+
 
 {% endblock %}

@@ -53,6 +53,7 @@ class Task extends BaseModel {
         if ($row) {
             $task = new Task(array(
                 'id' => $row['id'],
+                'account_id' => $row['account_id'],
                 'title' => $row['title'],
                 'text' => $row['text'],
                 'date' => $row['date']
@@ -73,18 +74,7 @@ class Task extends BaseModel {
     public static function findAllByAccountId($account_id) {
         $query = DB::connection()->prepare('SELECT * FROM Task WHERE account_id = :id');
         $query->execute(array('id' => $account_id));
-        $tasks = array();
-
-        foreach ($query->fetchAll() as $row) {
-            $tasks[] = new Task(array(
-                'id' => $row['id'],
-                'title' => $row['title'],
-                'text' => $row['text'],
-                'date' => $row['date']
-            ));
-        }
-
-        return $tasks;
+        return Task::fetchTasks($query);
     }
 
     /**
@@ -99,18 +89,7 @@ class Task extends BaseModel {
                 . 'ON Task.id = TaskClassification.task_id '
                 . 'WHERE TaskClassification.classification_id = :id');
         $query->execute(array('id' => $classification_id));
-        $tasks = array();
-
-        foreach ($query->fetchAll() as $row) {
-            $tasks[] = new Task(array(
-                'id' => $row['id'],
-                'title' => $row['title'],
-                'text' => $row['text'],
-                'date' => $row['date']
-            ));
-        }
-
-        return $tasks;
+        return Task::fetchTasks($query);
     }
 
     /**
@@ -121,31 +100,23 @@ class Task extends BaseModel {
 
         $connection = DB::connection();
         $query = $connection->prepare('INSERT INTO Task(account_id, title, text, date) VALUES (:account_id, :title, :text, NOW())');
-       
-                
         $query->execute(array('account_id' => $this->account_id, 'title' => $this->title, 'text' => $this->text));
-        $task_id = intval($connection->lastInsertId());
-        
-        echo $task_id;
+        $task_id = $connection->lastInsertId('task_id_seq');
+
         foreach ($classifications as $classification_id) {
             $query2 = DB::connection()->prepare('INSERT INTO TaskClassification(task_id, classification_id) VALUES (:task_id, :classification_id)');
             $query2->execute(array('task_id' => $task_id, 'classification_id' => $classification_id));
-            //    $query2 = DB::connection()->prepare('INSERT INTO TaskClassification(task_id, classification_id VALUES (:task_id, :account_id');
         }
     }
 
-    public function update() {
-        $query = DB::connection()->prepare('UPDATE Task SET title = :title, text = :text WHERE Task.id = :id');
-        $query->execute(array('title' => $this->title, 'text' => $this->text, 'id' => $this->id));
+    public function update($account_id) {
+        $query = DB::connection()->prepare('UPDATE Task SET title = :title, text = :text WHERE Task.id = :id AND Task.account_id = :account_id');
+        $query->execute(array('title' => $this->title, 'text' => $this->text, 'id' => $this->id, 'account_id' => $account_id));
     }
 
-    public static function delete($id) {
-
-
-        $query = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id');
-        // Huom delete ei toimi jos poistettava entiteetti on viimeinen, johon viitataan TaskClassificationissa
-
-        $query->execute(array('id' => $id));
+    public static function delete($id, $account_id) {
+        $query = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id AND Task.account_id = :account_id');
+        $query->execute(array('id' => $id, 'account_id' => $account_id));
     }
 
     public function validate_title() {
