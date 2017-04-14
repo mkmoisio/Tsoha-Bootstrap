@@ -16,7 +16,7 @@ class TaskController extends BaseController {
         }
         Kint::dump($task);
         Kint::dump($boolean);
-        View::make('task.html', array('task' => $task, 'owner' => $boolean));
+        View::make('task/task.html', array('task' => $task, 'owner' => $boolean));
     }
 
     public static function create() {
