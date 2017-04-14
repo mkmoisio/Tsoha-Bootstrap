@@ -67,6 +67,8 @@ class Classification extends BaseModel {
     }
 
     public static function delete($id) {
+        
+        
         $query = DB::connection()->prepare('DELETE FROM Classification WHERE Classification.id = :id');
         // Huom delete ei toimi jos poistettava entiteetti on viimeinen, johon viitataan TaskClassificationissa
         $query->execute(array('id' => $id));

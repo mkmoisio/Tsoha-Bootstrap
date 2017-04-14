@@ -15,25 +15,38 @@ class TaskController extends BaseController {
 
     public static function create() {
         self::check_logged_in();
-        View::make('task/create_task.html');
+        $classifications = Classification::findAll();
+
+        View::make('task/create_task.html', array('classifications' => $classifications));
     }
 
     public static function store() {
         self::check_logged_in();
         $params = $_POST;
-
+        
+        
+        
+       // Kint::dump();
+        $classifications = $params['classifications'];
+        
+        
+       
+        
         $attributes = array(
             'account_id' => self::get_user_logged_in()->id,
             'title' => $params['title'],
             'text' => $params['text']
         );
+       
 
         $task = new Task($attributes);
 
         $errors = $task->errors();
 
         if (count($errors) == 0) {
-            $task->save();
+             
+            $task->save($classifications);
+
             Redirect::to('/');
         } else {
             View::make('task/create_task.html', array('errors' => $errors, 'attributes' => $attributes));

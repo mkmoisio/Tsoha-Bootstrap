@@ -1,10 +1,6 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 class UserController extends BaseController {
 
@@ -28,6 +24,7 @@ class UserController extends BaseController {
     }
 
     public static function register() {
+
         View::make('register.html');
     }
 
@@ -40,7 +37,7 @@ class UserController extends BaseController {
 
         Kint::dump($user);
         if (!$user) {
-            View::make('register.html', array('errors' => array('Username already taken')));
+            View::make('register.html', array('errors' => array('Käyttäjätunnus on jo varattu!')));
         } else {
             $_SESSION['user'] = $user->id;
             Redirect::to('/', array('message' => 'Registered user ' . $user->username . '.'));

@@ -117,14 +117,21 @@ class Task extends BaseModel {
      * Saves the object to the Task table
      * @return type
      */
-    public function save() {
-        /// !!!!!!!!!! HUOM ACCOUNT IDKSI TULEE AINA 1 !!!!!!!!!!
-        $query = DB::connection()->prepare('INSERT INTO Task(account_id, title, text, date) VALUES (:account_id, :title, :text, NOW())');
-        $query->execute(array('account_id' => $this->account_id, 'title' => $this->title, 'text' => $this->text));
+    public function save($classifications) {
 
-//        $row = $query->fetch();
-//        $this->id = $row['id'];
-//        return $this->id;
+        $connection = DB::connection();
+        $query = $connection->prepare('INSERT INTO Task(account_id, title, text, date) VALUES (:account_id, :title, :text, NOW())');
+       
+                
+        $query->execute(array('account_id' => $this->account_id, 'title' => $this->title, 'text' => $this->text));
+        $task_id = intval($connection->lastInsertId());
+        
+        echo $task_id;
+        foreach ($classifications as $classification_id) {
+            $query2 = DB::connection()->prepare('INSERT INTO TaskClassification(task_id, classification_id) VALUES (:task_id, :classification_id)');
+            $query2->execute(array('task_id' => $task_id, 'classification_id' => $classification_id));
+            //    $query2 = DB::connection()->prepare('INSERT INTO TaskClassification(task_id, classification_id VALUES (:task_id, :account_id');
+        }
     }
 
     public function update() {
@@ -133,8 +140,11 @@ class Task extends BaseModel {
     }
 
     public static function delete($id) {
+
+
         $query = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id');
         // Huom delete ei toimi jos poistettava entiteetti on viimeinen, johon viitataan TaskClassificationissa
+
         $query->execute(array('id' => $id));
     }
 

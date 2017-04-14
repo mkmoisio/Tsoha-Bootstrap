@@ -7,6 +7,8 @@
       $twig = self::get_twig();
 
       try{
+          
+          
         // Asetetaan uudelleenohjauksen yhteydessä lisätty viesti
         self::set_flash_message($content);
 
@@ -19,6 +21,7 @@
         }
 
         // Tulostetaan Twig:n renderöimä näkymä
+        Kint::dump($content);
         echo $twig->render($view, $content);
       } catch (Exception $e){
         die('Virhe näkymän näyttämisessä: ' . $e->getMessage());
