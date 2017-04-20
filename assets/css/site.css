@@ -10,13 +10,13 @@
 }
 
 div.whitelem{
-    background-color:white;
+    background-color:#f9f9f9;
     padding:30px;
     border-radius: 10px;
     display: inline-block;
 }
 div.grayelem{
-    background-color:lightgrey;
+    background-color:#e8e8e8;
     padding:30px;
     border-radius: 10px;
     display: inline-block;

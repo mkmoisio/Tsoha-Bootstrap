@@ -17,6 +17,7 @@
 
         // Asetetaan näkymään kirjautunut käyttäjä, jos get_user_logged_in-metodi on toteutettu
         if(method_exists('BaseController', 'get_user_logged_in')){
+            $content['session'] = BaseController::get_session();
           $content['user_logged_in'] = BaseController::get_user_logged_in();
         }
 
