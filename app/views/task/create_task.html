@@ -18,13 +18,17 @@
 
         </div>
 
+        
+        {% if classifications %}
         <label>Classification</label>
         <select class="form-control" name="classifications[]" multiple="">
             {% for c in classifications %}
             <option value="{{c.id}}">{{c.title}}</option>
             {% endfor %}
         </select>
-
+        {% else %}
+        <label>Ei valittavia luokitteluja</label>
+        {% endif %}
         <div>
             <button type="submit" class="btn btn-default">Go</button>
         </div>

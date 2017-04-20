@@ -37,7 +37,7 @@ class UserController extends BaseController {
 
         Kint::dump($user);
         if (!$user) {
-            View::make('register.html', array('errors' => array('Käyttäjätunnus on jo varattu!')));
+            View::make('account/register.html', array('errors' => array('Käyttäjätunnus on jo varattu!')));
         } else {
             $_SESSION['user'] = $user->id;
             Redirect::to('/', array('message' => 'Registered user ' . $user->username . '.'));

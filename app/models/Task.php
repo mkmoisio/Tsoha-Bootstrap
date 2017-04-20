@@ -72,8 +72,8 @@ class Task extends BaseModel {
      * @return \Task
      */
     public static function findAllByAccountId($account_id) {
-        $query = DB::connection()->prepare('SELECT * FROM Task WHERE account_id = :id');
-        $query->execute(array('id' => $account_id));
+        $query = DB::connection()->prepare('SELECT * FROM Task WHERE account_id = :account_id');
+        $query->execute(array('account_id' => $account_id));
         return Task::fetchTasks($query);
     }
 
@@ -87,8 +87,8 @@ class Task extends BaseModel {
     public static function findAllByClassificationId($classification_id) {
         $query = DB::connection()->prepare('SELECT * FROM Task INNER JOIN TaskClassification '
                 . 'ON Task.id = TaskClassification.task_id '
-                . 'WHERE TaskClassification.classification_id = :id');
-        $query->execute(array('id' => $classification_id));
+                . 'WHERE TaskClassification.classification_id = :classification_id');
+        $query->execute(array('classification_id' => $classification_id));
         return Task::fetchTasks($query);
     }
 
@@ -115,8 +115,18 @@ class Task extends BaseModel {
     }
 
     public static function delete($id, $account_id) {
-        $query = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id AND Task.account_id = :account_id');
-        $query->execute(array('id' => $id, 'account_id' => $account_id));
+
+        // Tarkistetaan että kirjautunut käyttäjä omistaa taskin
+        if (Task::findOne($id)->account_id == $account_id) {
+
+            // Poistetaan ko. taskia kokevat liitostaulun rivit
+            $query1 = DB::connection()->prepare('DELETE FROM TaskClassification WHERE TaskClassification.task_id = :id');
+            $query1->execute(array('id' => $id));
+
+            // Poistetaan itse task
+            $query2 = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id AND Task.account_id = :account_id');
+            $query2->execute(array('id' => $id, 'account_id' => $account_id));
+        }
     }
 
     public function validate_title() {

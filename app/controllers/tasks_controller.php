@@ -42,10 +42,6 @@ class TaskController extends BaseController {
             'text' => $params['text']
         );
 
-//        foreach ($classifications as $classification) {
-//            $attributes['classifications'][] = $classification;
-//        }
-
         $task = new Task($attributes);
 
         $errors = $task->errors();
@@ -56,7 +52,8 @@ class TaskController extends BaseController {
 
             Redirect::to('/');
         } else {
-            View::make('task/create_task.html', array('errors' => $errors, 'attributes' => $attributes));
+            $classifications = Classification::findAll();
+            View::make('task/create_task.html', array('errors' => $errors, 'attributes' => $attributes, 'classifications' => $classifications));
         }
     }
 
@@ -94,6 +91,7 @@ class TaskController extends BaseController {
 
     public static function delete($id) {
         self::check_logged_in();
+        
         Task::delete($id, self::get_user_logged_in()->id);
         Redirect::to('/');
     }

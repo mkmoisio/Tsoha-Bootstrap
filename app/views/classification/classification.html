@@ -9,11 +9,12 @@
         <div>
             <br>
             <a href="{{base_path}}/classification/{{classification.id}}/edit" class="btn btn-default">Muokkaa</a>
+            {% if not tasks %}
             <form method="post" action="{{base_path}}/classification/{{classification.id}}/delete" >
                 <button type="submit" class="btn btn-default">Poista</button>
             </form>
 
-
+            {% endif %}
 
         </div>
     </div>
