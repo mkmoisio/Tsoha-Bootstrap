@@ -85,7 +85,7 @@ class Task extends BaseModel {
      * @return \Task
      */
     public static function findAllByClassificationId($classification_id) {
-        $query = DB::connection()->prepare('SELECT * FROM Task INNER JOIN TaskClassification '
+        $query = DB::connection()->prepare('SELECT Task.id, Task.account_id, Task.title, Task.text, Task.date FROM Task INNER JOIN TaskClassification '
                 . 'ON Task.id = TaskClassification.task_id '
                 . 'WHERE TaskClassification.classification_id = :classification_id');
         $query->execute(array('classification_id' => $classification_id));
