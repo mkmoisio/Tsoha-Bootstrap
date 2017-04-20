@@ -14,6 +14,19 @@ class Classification extends BaseModel {
         $this->validators = array('validate_title');
     }
 
+    private static function fetchClassifications($query) {
+        $classifications = array();
+
+        foreach ($query->fetchAll() as $row) {
+            $classifications[] = new Classification(array(
+                'id' => $row['id'],
+                'title' => $row['title'],
+                'text' => $row['text'],
+            ));
+        }
+        return $classifications;
+    }
+
     /**
      * Returns all entities
      * @return \Classification
@@ -61,27 +74,44 @@ class Classification extends BaseModel {
 //        $query = DB::connection()->prepare('SELECT Classification.id, Classification.title FROM Classification );
 //    }
 
-    public function save() {
-        $query = DB::connection()->prepare('INSERT INTO Classification(title, text) VALUES (:title, :text)');
+    public function save($account_id) {
+        $connection = DB::connection();
+        $query = $connection->prepare('INSERT INTO Classification(title, text) VALUES (:title, :text)');
         $query->execute(array('title' => $this->title, 'text' => $this->text));
+
+        $classification_id = $connection->lastInsertId('classification_id_seq');
+
+        $query2 = $connection->prepare('INSERT INTO AccountClassification(account_id, classification_id) VALUES (:account_id, :classification_id)');
+        $query2->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
     }
 
-    public static function delete($id) {
-     //   $query1 = DB::connection()->prepare('')
-        
-        
-        $query2 = DB::connection()->prepare('DELETE FROM Classification WHERE Classification.id = :id');
-        // Huom delete ei toimi jos poistettava entiteetti on viimeinen, johon viitataan TaskClassificationissa
-        $query2->execute(array('id' => $id));
+    public static function delete($id, $account_id) {
+        $query = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id');
+        $query->execute(array('account_id' => $account_id));
+
+        $query2 = DB::connection()->prepare('SELECT * FROM AccountClassification');
+        $classifications = Classification::fetchClassifications($query2);
+
+        if (!$classifications) {
+            $query3 = DB::connection()->prepare('DELETE FROM Classification WHERE Classification.id = :id');
+            // Huom! rikki, poistaminen onnistuu vain accountilla joka on luokittelun alun perin lisännyt
+            $query3->execute(array('id' => $id));
+        }
     }
 
     public function update() {
         $query = DB::connection()->prepare('UPDATE Classification SET title = :title, text = :text WHERE Classification.id = :id');
         $query->execute(array('title' => $this->title, 'text' => $this->text, 'id' => $this->id));
     }
-    
+
     public static function findAllByAccountId($account_id) {
-        
+        $query = DB::connection()->prepare('SELECT Classification.id, Classification.title, Classification.text FROM'
+                . ' Classification INNER JOIN AccountClassification ON Classification.id = AccountClassification.classification_id WHERE AccountClassification.account_id = :account_id');
+
+
+        $query->execute(array('account_id' => $account_id));
+
+        return Classification::fetchClassifications($query);
     }
 
     public function validate_title() {

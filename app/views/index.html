@@ -9,7 +9,14 @@
 
     <div class="grayelem">
         <div class="whitelem">
-            <h3>Tulevat menot</h3>
+
+            {%if personal%}
+
+            <h3>Käyttäjän {{user_logged_in.username}} tulevat menot</h3>
+            {% else %}
+            <h3>Kaikki tulevat menot</h3> 
+            {% endif %}
+
             <table style="width: 70%; display: inline-block" class="table table-condensed">
                 <thead>
                     <tr>

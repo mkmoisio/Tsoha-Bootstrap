@@ -15,7 +15,8 @@ class Controller extends BaseController {
     public static function personal() {
         $tasks = Task::findAllByAccountId(self::get_user_logged_in()->id);    
         $classifications = Classification::findAllByAccountId(self::get_user_logged_in()->id);
-        View::make('index.html', array('tasks' => $tasks, 'classifications' => $classifications));
+      
+        View::make('index.html', array('personal' => true, 'tasks' => $tasks, 'classifications' => $classifications));
     }
 
     public static function db() {
