@@ -15,3 +15,6 @@ Yleisiä linkkejä:
 [Esittelysivu](http://momikko.users.cs.helsinki.fi/tsoha/task)
 
 [Muokkaussivu](http://momikko.users.cs.helsinki.fi/tsoha/edit)
+
+## Testitunnus
+username - salasana
