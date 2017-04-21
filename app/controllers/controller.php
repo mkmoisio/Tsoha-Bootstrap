@@ -19,13 +19,4 @@ class Controller extends BaseController {
         View::make('general/index.html', array('personal' => true, 'tasks' => $tasks, 'classifications' => $classifications));
     }
 
-    public static function db() {
-        $tasks = Task::findAll();
-        $classifications = Classification::findAll();
-        $accounts = Account::findAll();
-        $taskclassifications = TaskClassification::findAll(); 
-        Kint::dump($taskclassifications);
-        View::make('db.html', array('tasks' => $tasks, 'classifications' => $classifications, 'accounts' => $accounts, 'taskclassifications' => $taskclassifications));
-    }
-
 }

@@ -23,8 +23,8 @@ class BaseController {
         // Jos käyttäjä ei ole kirjautunut sisään, ohjaa hänet toiselle sivulle (esim. kirjautumissivulle).
     }
     
-    public static function get_session(){
-       
-        return $_SESSION;
-    }
+//    public static function get_session(){
+//       
+//        return $_SESSION;
+//    }
 }
