@@ -74,29 +74,22 @@ class Classification extends BaseModel {
 //        $query = DB::connection()->prepare('SELECT Classification.id, Classification.title FROM Classification );
 //    }
 
-    public function save($account_id) {
+    public function save() {
         $connection = DB::connection();
         $query = $connection->prepare('INSERT INTO Classification(title, text) VALUES (:title, :text)');
         $query->execute(array('title' => $this->title, 'text' => $this->text));
+        /**
+          $classification_id = $connection->lastInsertId('classification_id_seq');
 
-        $classification_id = $connection->lastInsertId('classification_id_seq');
 
-        $query2 = $connection->prepare('INSERT INTO AccountClassification(account_id, classification_id) VALUES (:account_id, :classification_id)');
-        $query2->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
+          $query2 = $connection->prepare('INSERT INTO AccountClassification(account_id, classification_id) VALUES (:account_id, :classification_id)');
+          $query2->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
+         */
     }
 
-    public static function delete($id, $account_id) {
-        $query = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id');
-        $query->execute(array('account_id' => $account_id));
-
-        $query2 = DB::connection()->prepare('SELECT * FROM AccountClassification');
-        $classifications = Classification::fetchClassifications($query2);
-
-        if (!$classifications) {
-            $query3 = DB::connection()->prepare('DELETE FROM Classification WHERE Classification.id = :id');
-            // Huom! rikki, poistaminen onnistuu vain accountilla joka on luokittelun alun perin lisännyt
-            $query3->execute(array('id' => $id));
-        }
+    public static function delete($id) {
+        $query3 = DB::connection()->prepare('DELETE FROM Classification WHERE Classification.id = :id');
+        $query3->execute(array('id' => $id));
     }
 
     public function update() {

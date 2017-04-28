@@ -14,9 +14,10 @@ class TaskController extends BaseController {
         } else {
             $boolean = null;
         }
+        $user = Account::findOne($task->account_id)->username;
         Kint::dump($task);
         Kint::dump($boolean);
-        View::make('task/task.html', array('task' => $task, 'owner' => $boolean));
+        View::make('task/task.html', array('task' => $task, 'owner' => $boolean, 'user' => $user));
     }
 
     public static function create() {

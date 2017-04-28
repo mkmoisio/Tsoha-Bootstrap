@@ -104,9 +104,37 @@ class Task extends BaseModel {
         $task_id = $connection->lastInsertId('task_id_seq');
 
         foreach ($classifications as $classification_id) {
+
+            /**
+             * kytketään Task valittuihin luokitteluihin
+             */
             $query2 = DB::connection()->prepare('INSERT INTO TaskClassification(task_id, classification_id) VALUES (:task_id, :classification_id)');
             $query2->execute(array('task_id' => $task_id, 'classification_id' => $classification_id));
+            /**
+             * Kytketään valitut luokittelut käyttäjään
+             */
+            $this->createJointRow($this->account_id, $classification_id);
         }
+    }
+
+    /**
+     * Creates a joint row to join account $account_id to classification $classification_id
+     * @param type $account_id
+     * @param type $classification_id
+     */
+    private function createJointRow($account_id, $classification_id) {
+        $query = DB::connection()->prepare('SELECT * FROM AccountClassification WHERE account_id = :account_id AND classification_id = :classification_id LIMIT 1');
+        $query->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
+        $row = $query->fetch();
+        if (!$row) {
+            $query2 = DB::connection()->prepare('INSERT INTO AccountClassification(account_id, classification_id) VALUES (:account_id, :classification_id)');
+            $query2->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
+        }
+    }
+
+    private function deleteJointRow($account_id, $classification_id) {
+        $query = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id AND classification_id = :classification_id');
+        $query->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
     }
 
     public function update($account_id) {
@@ -115,9 +143,8 @@ class Task extends BaseModel {
     }
 
     public static function delete($id, $account_id) {
-
         // Tarkistetaan että kirjautunut käyttäjä omistaa taskin
-        if (Task::findOne($id)->account_id == $account_id) {
+        if (Task::findOne($id)->account_id == $account_id) {            
 
             // Poistetaan ko. taskia kokevat liitostaulun rivit
             $query1 = DB::connection()->prepare('DELETE FROM TaskClassification WHERE TaskClassification.task_id = :id');
@@ -126,6 +153,19 @@ class Task extends BaseModel {
             // Poistetaan itse task
             $query2 = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id AND Task.account_id = :account_id');
             $query2->execute(array('id' => $id, 'account_id' => $account_id));
+
+            $query3 = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id
+                AND classification_id IN (SELECT AccountClassification.classification_id AS OuterSubId FROM AccountClassification
+                LEFT JOIN 
+                
+                (SELECT Classification.id AS innerSubId FROM Classification INNER JOIN
+                TaskClassification ON Classification.id = TaskClassification.classification_id) AS InnerTable
+                
+                ON AccountClassification.classification_id = InnerTable.innerSubId WHERE InnerTable.innerSubId IS NULL)');
+            
+            
+            
+            $query3->execute(array('account_id'=> $account_id));
         }
     }
 

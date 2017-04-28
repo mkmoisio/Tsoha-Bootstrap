@@ -21,7 +21,7 @@ class ClassificationController extends BaseController {
         $errors = $classification->errors();
 
         if (count($errors) == 0) {
-            $classification->save(self::get_user_logged_in()->id);
+            $classification->save();
             Redirect::to('/');
         } else {
             View::make('classification/create_classification.html', array('errors' => $errors, 'attributes' => $attributes));
@@ -46,7 +46,7 @@ class ClassificationController extends BaseController {
 
     public static function delete($id) {
         self::check_logged_in();
-        Classification::delete($id, self::get_user_logged_in()->id);
+        Classification::delete($id);
         Redirect::to('/');
     }
 

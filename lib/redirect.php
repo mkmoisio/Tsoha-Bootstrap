@@ -9,7 +9,7 @@
         // Jos on, lisätään se sessioksi JSON-muodossa
         $_SESSION['flash_message'] = json_encode($message);
       }
-
+      
       // Ohjataan käyttäjä annettuun polkuun
       header('Location: ' . BASE_PATH . $path);
 
