@@ -132,10 +132,10 @@ class Task extends BaseModel {
         }
     }
 
-    private function deleteJointRow($account_id, $classification_id) {
-        $query = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id AND classification_id = :classification_id');
-        $query->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
-    }
+//    private function deleteJointRow($account_id, $classification_id) {
+//        $query = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id AND classification_id = :classification_id');
+//        $query->execute(array('account_id' => $account_id, 'classification_id' => $classification_id));
+//    }
 
     public function update($account_id) {
         $query = DB::connection()->prepare('UPDATE Task SET title = :title, text = :text WHERE Task.id = :id AND Task.account_id = :account_id');
@@ -154,18 +154,18 @@ class Task extends BaseModel {
             $query2 = DB::connection()->prepare('DELETE FROM Task WHERE Task.id = :id AND Task.account_id = :account_id');
             $query2->execute(array('id' => $id, 'account_id' => $account_id));
 
-            $query3 = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id
-                AND classification_id IN (SELECT AccountClassification.classification_id AS OuterSubId FROM AccountClassification
-                LEFT JOIN 
+            $query3 = DB::connection()->prepare('DELETE FROM AccountClassification WHERE account_id = :account_id1 AND
+                AccountClassification.classification_id NOT IN (SELECT AccountClassification.classification_id AS classification_id FROM AccountClassification
+                INNER JOIN 
                 
                 (SELECT Classification.id AS innerSubId FROM Classification INNER JOIN
                 TaskClassification ON Classification.id = TaskClassification.classification_id) AS InnerTable
                 
-                ON AccountClassification.classification_id = InnerTable.innerSubId WHERE InnerTable.innerSubId IS NULL)');
+                ON AccountClassification.classification_id = InnerTable.innerSubId WHERE AccountClassification.account_id = :account_id2)');
             
             
             
-            $query3->execute(array('account_id'=> $account_id));
+            $query3->execute(array('account_id1'=> $account_id, 'account_id2'=> $account_id));
         }
     }
 

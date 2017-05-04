@@ -88,6 +88,8 @@ class Classification extends BaseModel {
     }
 
     public static function delete($id) {
+        $query2 = DB::connection()->prepare('Delete FROM AccountClassification WHERE AccountClassification.classification_id = :classification_id');
+        $query2->execute(array('classification_id'=> $id));
         $query3 = DB::connection()->prepare('DELETE FROM Classification WHERE Classification.id = :id');
         $query3->execute(array('id' => $id));
     }
